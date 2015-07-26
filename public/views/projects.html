@@ -1,0 +1,61 @@
+<div class="col-xs-12" class="main-nav" id="home-nav">
+	<div class="container home">
+		<span class="logo"><a href="#/"><img src="./assets/logo.png" alt="Castr"></a></span>
+		
+		<span ng-controller="StatusCtrl" ng-show="currentuser" class="user">
+			<span id="user-name">
+				<h3 ng-controller="StatusCtrl" ng-show="currentuser">{{ currentuser.fname }}</h3>
+			</span>
+			<ul class="inline-list text-right">
+				<li ng-show="currentuser">
+					<a ng-href="#/home" title="Home"><img src="../assets/home.png" width="25" alt="home"></a>
+				</li>
+				<li ng-show="currentuser">
+					<a ng-href="#/login" ng-click="authObj.$unauth();currentuser=null;" title="Log Out"><img src="../assets/logout.png" width="40" alt="logout"></a>
+				</li>
+			</ul>
+		</span>
+	</div>
+</div>
+
+<div class="container home-content" ng-controller="ProjectsCtrl">
+	<div class="col-xs-6"><h1>My Projects</h1></div>
+	<div class="col-xs-6 text-right"><button style="outline:none;" ng-model="collapsed" ng-click="collapsed=!collapsed" class="button primary">New Casting Call</button> <button style="outline:none;" ng-model="collapsed2" ng-click="collapsed2=!collapsed2" class="button basic">Join Project</button></div>
+
+    <div ng-controller="MyProjectsCtrl" ng-show="collapsed2">
+		<div class="col-xs-4 col-xs-offset-8">
+			<form id="addMyProject" name="myprojectsForm" ng-submit="addMyProject()" novalidate>
+				<p>Insert project key in the form below to join a project. <small>(Obtain project key from project's creator.)</small></p>
+				<input id="myproject-id" placeholder="Project Key" name="projectkey" type="text" class="form-control input-md" ng-model="projectsKey" ng-required="true">
+				<button class="button" ng-disabled="myprojectsForm.$invalid">Join</button>
+			</form>
+		</div>
+	</div>
+	
+	<div id="newProject" class="col-xs-12" ng-show="collapsed">
+		<div class="col-xs-12">	
+			<form class="newProject col-xs-10 col-xs-offset-1" name="projectForm" ng-submit="addProject()" novalidate>
+		    	<input id="project-title" placeholder="Title" name="projectTitle" type="text" class="form-control input-md" ng-model="project.title" ng-required="true">
+		    	<input id="project-director" placeholder="Director" name="projectDir" type="text" class="form-control input-md" ng-model="project.dir" ng-required="true">
+		    	<input id="project-date" placeholder="Audition Date(s)" name="projectDate" type="text" class="form-control input-md" ng-model="project.date" ng-required="true">
+		    	<input id="project-time" placeholder="Audition Time(s)" name="projectTime" type="text" class="form-control input-md" ng-model="project.time" ng-required="true">
+		    	<textarea placeholder="Description" id="project-descr" name="projectDescr" class="form-control" ng-model="project.description" ng-required="true"></textarea>
+			
+				<button class="button primary" ng-disabled="projectForm.$invalid">Add</button>
+			</form>
+		</div>
+    </div>
+
+
+	<div class="col-xs-12 project-titles" ng-controller="ProjectCtrl">
+		<ul id="titles" class="inline-list">
+	      <li ng-repeat="project in projects | filter:projectfilter">
+	        <!-- project title -->
+	        <div class="list-item">
+	        	<a href="#/projects/{{project.$id}}">{{ project.title }}</a>
+	        	<span class="text-muted">{{project.$id}}</span>
+	        </div>
+	      </li>
+	    </ul>
+	</div>
+</div>

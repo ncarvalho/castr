@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="casting">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<title>Castr</title>
+
+	<link rel="icon" 
+      type="image/png" 
+      href="assets/favicon.png">
+	
+	<!-- JS -->
+	<!-- BOWER:js -->
+	<script src="libs/angular/angular.js"></script>
+	<script src="libs/firebase/firebase.js"></script>
+	<script src="libs/angularfire/dist/angularfire.js"></script>
+	<!-- endbower -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.min.js"></script>
+	<script src="js/angular.dcb-img-fallback.min.js"></script>
+	<script src="js/main.min.js"></script>
+	<script src="controllers/app.min.js"></script>
+	
+	<!-- CSS -->
+	<style type="text/css">
+		@font-face {
+			font-family: 'Bebas Neue';
+			src: url('fonts/BebasNeue-Regular.otf') format("opentype"), url('fonts/BebasNeue-Regular.ttf')  format('truetype');
+			font-weight: normal;
+			font-style: normal;
+		}
+		@font-face {
+			font-family: 'Bebas Neue';
+			src: url('fonts/BebasNeue-Bold.otf') format("opentype"), url('fonts/BebasNeue-Bold.ttf')  format('truetype');
+			font-weight: bold;
+			font-style: normal;
+		}
+		@font-face {
+			font-family: "Gandhi Sans";
+			src: url("fonts/GandhiSans-Regular.otf") format("opentype"), url('fonts/GandhiSans-Regular.ttf')  format('truetype');
+			font-weight: normal;
+			font-style: normal;
+		}
+	</style>
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<!-- this will bring in any templates related to the task at hand -->
+	<main ng-view></main>
+	
+
+	<!-- <footer>&copy; 2015 Castr. Nicole Tavares Carvalho</footer> -->
+</body>
+</html>

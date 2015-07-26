@@ -1,0 +1,51 @@
+<div class="col-xs-12" class="main-nav" id="home-nav">
+	<div class="container home">
+		<span class="logo" style="padding-bottom: 6px;"><a href="#/"><img src="./assets/logo.png" alt="Castr"></a></span>
+	</div>
+</div>
+
+<section id="signup-cta">
+	<h1>Keep track of your projects today.</h1>
+	<a href="#/register" class="button signup-btn">Start organizing</a>
+</section>
+
+<div class="container" ng-controller="RegisterCtrl">
+	<section class="login" ng-hide="currentuser">
+		<h1 class="col-xs-12">Log In</h1>
+
+
+		<section class="col-xs-12 col-sm-7">
+			<h2>Directors</h2>
+
+			<form name="loginForm" class="col-xs-12" ng-submit="login()" novalidate>
+				<p class="error" ng-show="authError">{{ authError }}</p>
+				<div class="form-group">
+					<label class="col-xs-3">Email</label>
+					<div class="col-xs-9">	
+						<input type="email" name="email" placeholder="Email" class="form-control" 
+						ng-model="user.email" ng-required="true">
+						<p class="error" ng-show="loginForm.email.$invalid && loginForm.email.$touched">Must be a valid email</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-xs-3">Password</label>
+					<div class="col-xs-9">	
+						<input type="password" name="password" placeholder="Password" class="form-control" 
+						ng-model="user.password" ng-required="true">
+						<p class="error" ng-show="loginForm.password.$invalid && loginForm.password.$touched">Please enter a valid password</p>
+					</div>
+				</div>
+				<button class="button primary" style="width: 100px;" type="submit" 
+					ng-disabled="loginForm.$invalid">Log In</button>
+			</form>
+			<!-- <p class="col-xs-12">Start keeping track of your projects by <a href="#/register">signing up</a>.</p> -->
+		</section>
+
+		<section class="col-xs-12 col-sm-5">
+			<h2>Actors</h2>
+			<h3>Sign up to audition for the latest production!</h3>
+
+			<a href="#/select" class="button primary actor-login text-center">Send Resume</a>
+		</section>
+	</section>
+</div>

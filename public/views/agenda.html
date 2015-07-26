@@ -1,0 +1,51 @@
+<!-- main nav; will change depending on user status -->
+<nav class="col-xs-1" ng-include="'views/nav.html'" ng-controller="ProjectCtrl"></nav>
+
+<div class="wrapper col-xs-11 col-xs-offset-1">
+
+	<div class="col-xs-12" class="main-nav user-nav">
+		<span style="float:right; padding-top:20px;" ng-controller="StatusCtrl" ng-show="currentuser" class="user text-muted">
+			<ul class="inline-list">
+				<li ng-show="currentuser">
+					<a ng-href="#/home" title="Home"><img src="../assets/home_blk.png" width="25" alt="home"></a>
+				</li>
+				<!-- <li ng-show="currentuser">
+					<a ng-href="#/" title="Settings"><img src="../assets/settings_blk.png" width="25" alt="settings"></a>
+				</li> -->
+				<li ng-show="currentuser">
+					<a ng-href="#/login" ng-click="authObj.$unauth();currentuser=null;" title="Log Out"><img src="../assets/logout_blk.png" width="40" alt="logout"></a>
+				</li>
+			</ul>
+		</span>
+	</div>
+	<div class="col-xs-12">
+		<!-- displays the applicants to the current user -->
+		<div ng-controller="ApplyCtrl" class="content">
+			<div id="recent-apps">
+				<ul id="applications">
+			      <li ng-repeat="applicant in applications">
+			      	<!-- applicant headshot -->
+			      	<div class="col-xs-3">
+			      		<a href="#/applicant/{{applicant.$id}}">
+			      			<img ng-src="{{ applicant.image }}" fallback-src loading-src class="img-thumbnail userImg" alt="headshot" width="200">
+			      		</a>
+			      	</div>
+			      	<!-- applicant basic information -->
+			      	<div class="col-xs-9 details">
+			      		<h3><a href="#/applicant/{{applicant.$id}}">{{ applicant.name }}</a></h3>
+			      		<ul>
+			      			<li><strong>Phone:</strong> {{ applicant.phone }}</li>
+				        	<li><strong>Email:</strong> {{ applicant.email }}</li>
+				        	<li><strong>Height:</strong> {{ applicant.height }}</li>
+				        	<li><strong>Weight:</strong> {{ applicant.weight }}</li>
+				        	<li><strong>Hair Color:</strong> {{ applicant.hair }}</li>
+				        	<li><strong>Eye Color:</strong> {{ applicant.eye }}</li>
+				        	<li><strong>DOB:</strong> {{ applicant.dob }}</li>
+			      		</ul>
+			      	</div>
+			      </li>
+			    </ul>
+			</div>
+		</div>
+	</div>
+</div>

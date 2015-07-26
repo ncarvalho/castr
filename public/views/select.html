@@ -1,0 +1,156 @@
+<div class="col-xs-12" class="main-nav" id="home-nav">
+	<div class="container home">
+		<span class="logo" style="padding-bottom: 6px;"><a href="#/"><img src="./assets/logo.png" alt="Castr"></a></span>
+	</div>
+</div>
+
+<div class="container">
+	<div ng-controller="ApplyCtrl" class="col-xs-12">
+		<form class="application" name="applicationForm" ng-submit="apply()" novalidate>
+			<h1><span>1.</span>Tell Us About Yourself</h1>
+			<fieldset id="about-you-fieldset">
+				<h2 class="col-xs-3">Headshot</h2>
+				<div class="col-xs-9 headshot">
+					<div class="form-group">
+						<label for="image" class="col-xs-2 required-field">Image URL*</label>
+						<div class="col-xs-10">
+							<input id="image" name="appimage" type="text" class="form-control input-md" ng-model="application.image" ng-required="true">
+							<p class="error" ng-show="applicationForm.appimage.$invalid && applicationForm.appimage.$touched">Please enter an Image URL</p>
+						</div>
+					</div>
+				</div>
+				<h2 class="col-xs-3">General Information</h2>
+				<div class="col-xs-9 personal-info">
+					<div class="form-group">
+						<label for="name" class="col-xs-2 required-field">Full Name*</label>
+						<div class="col-xs-10">
+							<input id="name" name="appname" type="text" class="form-control input-md" ng-model="application.name" ng-required="true">
+							<p class="error" ng-show="applicationForm.appname.$invalid && applicationForm.appname.$touched">Please enter a Full Name</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="phone" class="col-xs-2 required-field">Phone Number*</label>
+						<div class="col-xs-10">
+							<input id="phone" name="appphone" type="phone" class="form-control input-md" ng-model="application.phone" ng-required="true">
+							<p class="error" ng-show="applicationForm.appphone.$invalid && applicationForm.appphone.$touched">Please enter a valid Phone Number</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="email" class="col-xs-2 required-field">Email Address*</label>
+						<div class="col-xs-10">
+							<input id="email" name="appemail" type="email" class="form-control input-md" ng-model="application.email" ng-required="true">
+							<p class="error" ng-show="applicationForm.appemail.$invalid && applicationForm.appemail.$touched">Please enter a valid email</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="height" class="col-xs-2">Height</label>
+						<div class="col-xs-10">
+							<input id="height" name="appheight" type="text" class="form-control input-md" ng-model="application.height">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="weight" class="col-xs-2">Weight</label>
+						<div class="col-xs-10">
+							<input id="weight" name="appweight" type="text" class="form-control input-md"  ng-model="application.weight">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="hair" class="col-xs-2">Hair Color</label>
+						<div class="col-xs-10">
+							<input id="hair" name="apphair" type="text" class="form-control input-md" ng-model="application.hair">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="eyes" class="col-xs-2">Eye Color</label>
+						<div class="col-xs-10">
+							<input id="eyes" name="appeyes" type="text" class="form-control input-md" ng-model="application.eye">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="dob" class="col-xs-2 required-field">Date of Birth*</label>
+						<div class="col-xs-10">
+							<input id="dob" name="appdob" type="text" class="form-control input-md" ng-model="application.dob" ng-required="true">
+						</div>
+					</div>
+				</div>
+				<h2 class="col-xs-3">Experience &amp; Skills</h2>
+				<div class="col-xs-9 experience">
+					<div class="form-group">
+						<label for="film" class="col-xs-2">Film</label>
+						<div class="col-xs-10">
+							<textarea id="film" name="appfilm" class="form-control" ng-model="application.film"></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="tv" class="col-xs-2">Television</label>
+						<div class="col-xs-10">
+							<textarea id="tv" name="apptv" class="form-control" ng-model="application.tv"></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="theatre" class="col-xs-2">Theatre</label>
+						<div class="col-xs-10">
+							<textarea id="theatre" name="apptheatre" class="form-control" ng-model="application.theatre"></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="commercial" class="col-xs-2">Commercial</label>
+						<div class="col-xs-10">
+							<textarea id="commercial" name="appcommercial" class="form-control" ng-model="application.commercial"></textarea>
+						</div>
+					</div>
+				</div>
+				<h2 class="col-xs-3">Links <span class="text-muted">(IMDB, LinkedIn, Portfolio, etc.)</span></h2>
+				<div class="col-xs-9 links">
+					<div class="form-group">
+						<div class="col-xs-10 col-xs-offset-2">
+							<textarea id="links" name="applinks" class="form-control" ng-model="application.links"></textarea>
+						</div>
+					</div>
+				</div>
+				<h2 class="col-xs-3">Education &amp; Training</h2>
+				<div class="col-xs-9 experience">
+					<div class="form-group">
+						<div class="col-xs-10 col-xs-offset-2">
+							<textarea id="education" name="appeducation" class="form-control" ng-model="application.education"></textarea>
+						</div>
+					</div>
+				</div>
+				<h2 class="col-xs-3">Special Skills</h2>
+				<div class="col-xs-9 experience">
+					<div class="form-group">
+						<div class="col-xs-10 col-xs-offset-2">
+							<textarea id="special-skills" name="appspecialskills" class="form-control" ng-model="application.skills"></textarea>
+						</div>
+					</div>
+	            </div>
+	        </fieldset>
+
+            <h1><span>2.</span>Choose a project</h1>
+					<label class="col-xs-12 required-field">Which project do you want to audition for?*</label>
+            <fieldset id="select-project-fieldset">
+				<div ng-controller="SelectCtrl">
+					<ul id="titles" class="inline-list">
+				      <li ng-repeat="project in projects">
+				        <!-- project title -->
+				        <div class="list-item radio">
+				        	<label>
+					        	<input id="selectProject" type="radio" name="selectProject" value="{{project.$id}}" ng-model="application.selectProject" ng-required="true"> <strong>{{ project.title }}</strong> <p>{{project.description}}</p>
+					        	<p class="error" ng-show="applicationForm.selectProject.$invalid && applicationForm.selectProject.$touched">Please select a Project</p>
+					        </label>
+				        </div>
+				      </li>
+				    </ul>
+				</div>
+
+				<div class="form-group col-xs-12">
+                    <div class="col-md-12 text-right">
+                        <button id="singlebutton" class="button primary" ng-disabled="applicationForm.$invalid">Submit</button>
+                    </div>
+                </div>
+            </fieldset>
+		</form>
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,153 @@
+<!-- main nav; will change depending on user status -->
+<nav class="col-xs-1">
+	<a href="/#/home"><img src="../assets/logo.png" alt="logo"></a>
+	<ul class="inline-list text-center">
+		<li ng-show="currentuser">
+			<a ng-href="/#/projects/{{currentProject.$id}}" data-toggle="tooltip" data-placement="right" title="Agenda"><img src="../assets/agenda.png" width="25" alt="agenda"><h5>Agenda</h5></a>
+		</li>
+		<li ng-show="currentuser">
+			<a ng-href="/#/projects/{{currentProject.$id}}/chat" data-toggle="tooltip" data-placement="right" title="Chat"><img src="../assets/chat.png" width="25" alt="chat"><h5>Chat</h5></a>
+		</li>
+	</ul>
+</nav>
+
+<div class="wrapper col-xs-11 col-xs-offset-1">
+
+	<div class="col-xs-12" class="main-nav">
+		<span style="float:right; padding-top:20px;" ng-controller="StatusCtrl" ng-show="currentuser" class="user text-muted">
+			<ul class="inline-list">
+				<li ng-show="currentuser">
+					<a ng-href="#/home" title="Home"><img src="../assets/home_blk.png" width="25" alt="home"></a>
+				</li>
+				<li ng-show="currentuser">
+					<a ng-href="#/login" ng-click="authObj.$unauth();currentuser=null;" title="Log Out"><img src="../assets/logout_blk.png" width="40" alt="logout"></a>
+				</li>
+			</ul>
+		</span>
+	</div>	
+	
+	<div class="details">
+		<div class="col-xs-3 details-content">
+			<div class="col-xs-12">
+				<img ng-src="{{ currentApplicant.image }}" fallback-src loading-src class="img-thumbnail" alt="headshot" width="400">
+			</div>
+			<div class="col-xs-12 details">
+				<h1 class="text-center">{{ currentApplicant.name }}</h1>
+				<ul class="inline-list text-center">
+					<li>{{ currentApplicant.phone }}</li>
+					<li>{{ currentApplicant.email }}</li>
+					<li ng-show="currentApplicant.height.length">{{ currentApplicant.height }}</li>
+					<li ng-show="currentApplicant.weight.length">{{ currentApplicant.weight }} lbs</li>
+					<li ng-show="currentApplicant.weight.length">{{ currentApplicant.hair }} hair</li>
+					<li ng-show="currentApplicant.weight.length">{{ currentApplicant.eye }} eyes</li>
+					<li>{{ currentApplicant.dob }}</li>
+				</ul>
+			</div>
+			<!-- <div class="col-xs-12" ng-controller="CategoryCtrl"><button class="button basic" id="open-cat-form">What to do</button>
+				<div id="categorize-actor">
+					<p class="small">Categorize this actor as Offer Role, Callback for Audition, Cast, or Not Right for the Part.</p>
+					<form name="categorizeActor" ng-submit="categorize($event)" novalidate>
+						<select class="actorCategory form-control" ng-model="category">
+							<option value="offerRole">Offer Role</option>
+							<option value="callback">Callback for Audition</option>
+							<option value="cast">Cast</option>
+							<option value="notRight">Not Right for the Part</option>
+						</select>
+						<button class="button primary small">Set</button>
+					</form>
+				</div>
+			</div> -->
+		</div>	
+		<div class="col-xs-9 details-main">
+			<ul class="inline-list" ng-init="tab = 1">
+				<li class="col-xs-6" ng-class="{active:tab===1}"> 
+					<a href ng-click="tab = 1">
+						<button id="details-resume" class="button primary">Resume</button>
+					</a>	
+				</li>
+				<li class="col-xs-6" ng-class="{active:tab===2}"> 
+					<a href ng-click="tab = 2"><button id="details-chat" class="button basic">Chat</button></a> 
+				</li>
+				
+
+				<section ng-show="tab === 1" class="col-xs-12" id="resume">
+					<h2>Experience</h2>
+					<div class="noExperience" ng-show="
+						!currentApplicant.film.length && 
+						!currentApplicant.tv.length && 
+						!currentApplicant.theatre.length &&
+						!currentApplicant.commercial.length &&
+						!currentApplicant.links.length &&
+						!currentApplicant.education.length &&
+						!currentApplicant.skills.length">
+						<p>This actor has no experience, <em>yet</em>.</p>
+						<p>Give them a shot anyways. They might be really good.</p>
+					</div>
+					<div ng-if="currentApplicant.film.length">	
+						<h3><span>Film<span></h3>
+						<div class="resume-section">
+							<p>{{ currentApplicant.film }}</p>
+						</div>
+					</div>
+					<div ng-if="currentApplicant.tv.length">	
+						<h3><span>Television<span></h3>
+						<div class="resume-section">
+							<p>{{ currentApplicant.tv }}</p>
+						</div>
+					</div>
+					<div ng-if="currentApplicant.theatre.length">	
+						<h3><span>Theatre<span></h3>
+						<div class="resume-section">
+							<p>{{ currentApplicant.theatre }}</p>
+						</div>
+					</div>
+					<div ng-if="currentApplicant.commercial.length">	
+						<h3><span>Commercial<span></h3>
+						<div class="resume-section">
+							<p>{{ currentApplicant.commercial }}</p>
+						</div>
+					</div>
+					<div ng-if="currentApplicant.links.length">	
+						<h2>Links</h2>
+						<div class="resume-section">
+							<p>{{ currentApplicant.links }}</p>
+						</div>
+					</div>
+					<div ng-if="currentApplicant.education.length">	
+						<h2>Education &amp; Training</h2>
+						<div class="resume-section">
+							<p>{{ currentApplicant.education }}</p>
+						</div>
+					</div>
+					<div ng-if="currentApplicant.skills.length">	
+						<h2>Skills</h2>
+						<div class="resume-section">
+							<p>{{ currentApplicant.skills }}</p>
+						</div>
+					</div>
+					
+				</section>
+
+				<section ng-show="tab === 2" ng-controller="NotesCtrl" class="col-xs-12" id="details-chat">	
+					<h2>Chat</h2>
+					<!-- messages -->
+					<div id="chat">
+						<ul id="msgs" class="inline-list">
+					      <li ng-repeat="message in notes">
+					        <!-- message -->
+					        <span><h4>{{ message.from }} </h4>{{ message.text }}</span>
+					        <!-- delete message if related to current user -->
+					        <button ng-hide="message.id != currentuser.$id" ng-click="notes.$remove(message)"><i class="fa fa-times-circle text-right"></i></button>
+					        
+					      </li>
+					    </ul>
+					</div>
+					<!-- textarea for new messages -->
+				    <div id="newMsg">
+				    	<hr><textarea ng-model="newMessage" ng-keydown="addMessage($event)" class="form-control"></textarea>
+				    </div>
+				</section>
+			</ul>
+		</div>
+	</div>
+</div>

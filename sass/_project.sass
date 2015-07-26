@@ -1,0 +1,42 @@
+#project-title
+	border-bottom: 1px solid $red
+	h2 
+		width: 500px
+		float: left	
+		small
+			padding-left: 10px
+	.add-contrib
+		width: 150px
+		float: right
+		font-size: 14pt
+		outline: none
+
+div[ng-controller="ContribsCtrl"]
+	margin: -6px 0 20px 0
+	form
+		width: 380px
+		float: right
+		padding: 10px
+		background: #e4e4e4
+
+#actors
+	ul 
+		list-style-type: none
+		padding: 0
+		li[ng-repeat*="applicant in applications"]
+			overflow: hidden
+			margin: 10px 0
+			padding: 10px
+			-webkit-box-shadow: 2px 2px 5px 0px rgba(229,229,229,1)
+			-moz-box-shadow: 2px 2px 5px 0px rgba(229,229,229,1)
+			box-shadow: 2px 2px 5px 0px rgba(229,229,229,1)
+			a 
+				display: block
+				img 
+					width: 100%
+			.details
+				h3 
+					margin: 0 0 5px 0 
+				ul 
+					list-style-type: none
+					padding: 0

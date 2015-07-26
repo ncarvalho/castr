@@ -1,0 +1,52 @@
+<div class="col-xs-12" class="main-nav" id="home-nav">
+	<div class="container home">
+		<span class="logo" style="padding-bottom: 6px;"><a href="#/"><img src="./assets/logo.png" alt="Castr"></a></span>
+	</div>
+</div>
+
+<div class="register container" ng-controller="RegisterCtrl">
+	<h1 class="col-xs-12">Register</h1>
+	<form name="registerForm" class="col-xs-5" ng-submit="register()" novalidate>
+		<p class="error" ng-show="authError">{{ authError }}</p>
+		
+		<div class="form-group">
+			<label class="col-xs-4">First Name</label>	
+			<div class="col-xs-8">
+				<input type="text" name="fname" placeholder="First Name" class="form-control" 
+					ng-model="user.fname" ng-required="true">
+				<p class="error" 
+					ng-show="registerForm.fname.$invalid && registerForm.fname.$touched">Please enter your first name</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-4">Last Name</label>	
+			<div class="col-xs-8">
+				<input type="text" name="lname" placeholder="Last Name" class="form-control" 
+					ng-model="user.lname" ng-required="true">
+				<p class="error" 
+					ng-show="registerForm.lname.$invalid && registerForm.lname.$touched">Please enter your last name</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-4">Email</label>	
+			<div class="col-xs-8">
+				<input type="email" name="email" placeholder="Email" class="form-control" 
+					ng-model="user.email" ng-required="true">
+				<p class="error" 
+					ng-show="registerForm.email.$invalid && registerForm.email.$touched">Must be a valid email</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-4">Password</label>	
+			<div class="col-xs-8">
+				<input type="password" name="password" placeholder="Password" class="form-control"
+					ng-model="user.password">
+				<p class="error" 
+					ng-show="registerForm.password.$invalid && registerForm.password.$touched">Please enter a valid password</p>
+			</div>
+		</div>
+		<button class="button primary" style="width:100px;" 
+			ng-disabled="registerForm.$invalid">Submit</button>
+	</form>
+	<p class="col-xs-12">Already a member? <a href="#/login">Log In</a>.</p>
+</div>

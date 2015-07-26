@@ -1,0 +1,38 @@
+<!-- main nav; will change depending on user status -->
+<nav class="col-xs-1" ng-include="'views/nav.html'" ng-controller="ProjectCtrl"></nav>
+
+<div class="wrapper col-xs-11 col-xs-offset-1">
+
+	<div class="col-xs-12" class="main-nav">
+		<span style="float:right; padding-top:20px;" ng-controller="StatusCtrl" ng-show="currentuser" class="user text-muted">
+			<ul class="inline-list">
+				<li ng-show="currentuser">
+					<a ng-href="#/home" title="Home"><img src="../assets/home_blk.png" width="25" alt="home"></a>
+				</li>
+				<li ng-show="currentuser">
+					<a ng-href="#/login" ng-click="authObj.$unauth();currentuser=null;" title="Log Out"><img src="../assets/logout_blk.png" width="40" alt="logout"></a>
+				</li>
+			</ul>
+		</span>
+	</div>
+	<!-- main chat for users -->
+	<aside ng-controller="ChatCtrl" class="col-xs-12">	
+		<h1>Chat</h1>
+		<!-- messages -->
+		<div id="chat">
+			<ul id="msgs" class="inline-list">
+		      <li ng-repeat="message in messages">
+		        <!-- message -->
+		        <span><h4>{{ message.from }} </h4>{{ message.text }}</span>
+		        <!-- delete message if related to current user -->
+		        <button ng-hide="message.id != currentuser.$id" ng-click="messages.$remove(message)"><i class="fa fa-times-circle text-right"></i></button>
+		        
+		      </li>
+		    </ul>
+		</div>
+		<!-- textarea for new messages -->
+	    <div id="newMsg">
+	    	<hr><textarea ng-model="newMessage" ng-keydown="addMessage($event)" class="form-control"></textarea>
+	    </div>
+	</aside>
+</div>

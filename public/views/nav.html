@@ -1,0 +1,9 @@
+<a href="/#/home"><img src="../assets/logo.png" alt="logo"></a>
+<ul class="inline-list text-center">
+	<li ng-show="currentuser">
+		<a ng-href="/#/projects/{{currentProject.$id}}" data-toggle="tooltip" data-placement="right" title="Agenda"><img src="../assets/agenda.png" width="25" alt="agenda"><h5>Agenda</h5></a>
+	</li>
+	<li ng-show="currentuser">
+		<a ng-href="/#/projects/{{currentProject.$id}}/chat" data-toggle="tooltip" data-placement="right" title="Chat"><img src="../assets/chat.png" width="25" alt="chat"><h5>Chat</h5></a>
+	</li>
+</ul>

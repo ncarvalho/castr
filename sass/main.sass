@@ -1,0 +1,62 @@
+@import colors
+@import fonts
+@import details
+@import application
+@import nav
+@import login
+@import buttons
+@import chat
+@import projects
+@import project
+
+html, body
+	height: 100%
+body 
+	font-size 					: 12pt
+	font-family 				: $gandhi
+
+img[alt="logo"]
+	width 						: 70%
+	margin 						: 0 auto
+	display 					: block
+
+a, a:hover
+	color: $red
+
+*[disabled="disabled"]
+	opacity: .7
+
+.actor-login
+	padding: 10px 20px 5px 20px
+	margin: 10px 0
+	overflow: hidden
+	display: block
+	width: 130px
+	float: right
+	&:hover
+		color: $white
+		text-decoration: none
+.user
+	ul 
+		li 
+			display: inline-block
+			padding: 0 10px
+
+.inline-list 
+	list-style-type 			: none
+	padding 					: 0
+
+
+.wrapper
+	position 					: relative !important
+	.content 
+		padding-left: 0
+	section 
+		padding: 10px
+		
+
+footer
+	width: 100%
+	padding: 20px
+	color: $grey
+	text-align: center
