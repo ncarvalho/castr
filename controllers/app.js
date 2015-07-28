@@ -4,10 +4,7 @@ var appCtrls = angular.module('appCtrls', ['firebase']);
 
 // this handles my templates and routes
 app.config(['$routeProvider', function($routeProvider) {
-	$routeProvider.when('/agenda', {
-			templateUrl: 'views/agenda.html', 
-			controller: 'AgendaCtrl'
-		}).when('/projects/:projectID/chat', {
+	$routeProvider.when('/projects/:projectID/chat', {
 			templateUrl: 'views/chat.html', 
 			controller: 'ChatCtrl'
 		}).when('/home', {
