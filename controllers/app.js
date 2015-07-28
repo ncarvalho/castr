@@ -368,7 +368,7 @@ app.controller('MyProjectsCtrl', ['$scope', '$location', '$firebase', '$firebase
 		    	console.log("user", $scope.currentuser);
 		    	var ref = new Firebase("https://casting.firebaseio.com/users/" + $scope.currentuser.$id + "/myprojects");
 				var sync = $firebase(ref);
-				$scope.myprojects = sync.$asArray();
+				$rootScope.myprojects = sync.$asArray();
 		    })
 		} else {
 			$location.path('/login');
@@ -385,15 +385,17 @@ app.controller('MyProjectsCtrl', ['$scope', '$location', '$firebase', '$firebase
 
 }]);
 
-// app.filter('projectfilter', function () {
-//   return function () {
-//     var projectkeys = [];
+app.filter('projectfilter', function () {
+  return function () {
+    var projectkeys = [];
 
-//     angular.forEach($scope.myprojects, function(value, key) {
-// 	  this.push(value);
-// 	  console.log("value", value);
-// 	}, projectkeys);
+    console.log("myprojects", $rootScope.myprojects);
 
-//     return projectkeys;
-//   };
-// });
+    angular.forEach($rootScope.myprojects, function(value, key) {
+	  this.push(value);
+	  console.log("value", value);
+	}, projectkeys);
+
+    return projectkeys;
+  };
+});
