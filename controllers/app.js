@@ -44,7 +44,8 @@ app.config(['$routeProvider', function($routeProvider) {
 app.controller('RegisterCtrl', ['$scope', '$location', '$firebase', '$firebaseAuth', '$rootScope', function($scope, $location, $firebase, $firebaseAuth, $rootScope){
 	// setting 'ref' to my firebase url
 	var ref = new Firebase("https://casting.firebaseio.com/users");
-    
+
+	// set ref to authobj for user authentication    
     $scope.authObj = $firebaseAuth(ref);
 	$scope.sync = $firebase(ref);
 	$scope.newUser = $scope.sync.$asObject();
@@ -91,32 +92,6 @@ app.controller('RegisterCtrl', ['$scope', '$location', '$firebase', '$firebaseAu
 			$location.path('/login');
 		});
 	}
-
-}]);
-// controller for agenda chat
-app.controller('AgendaCtrl', ['$scope', '$location', '$firebase', '$firebaseAuth', '$rootScope', function($scope, $location, $firebase, $firebaseAuth, $rootScope){
-	// setting 'ref' to my firebase url
-	var ref = new Firebase("https://casting.firebaseio.com/");
-	// start a firebase app with this url 
-	var sync = $firebase(ref);
-
-	var userRef = new Firebase("https://casting.firebaseio.com/");
-    $scope.authObj = $firebaseAuth(userRef);
-
-    $scope.authObj.$onAuth(function(authData) {
-		if (authData) {
-		    var singleRef = new Firebase("https://casting.firebaseio.com/users/" + authData.uid);
-		    $scope.user = $firebase(singleRef);
-		    $scope.currentuser = $scope.user.$asObject();
-		    $scope.currentuser.$loaded().then(function(data){
-		    	$scope.currentuser = data;
-		    })
-	  } else {
-	  	$location.path('/login');
-	  }
-	});
-
-	
 }]);
 // controller for the audition application
 app.controller('ApplyCtrl', ['$scope', '$firebase', '$location', function($scope, $firebase, $location){
@@ -127,8 +102,6 @@ app.controller('ApplyCtrl', ['$scope', '$firebase', '$location', function($scope
 	// saving the array of applications to firebase
 	$scope.applications = sync.$asArray();
 	// apply function that accepts all the fields from the apply.html and saves into applications array
-	
-
 	$scope.apply = function(e) {
 		$scope.applications.$add(
 			$scope.application
@@ -139,7 +112,6 @@ app.controller('ApplyCtrl', ['$scope', '$firebase', '$location', function($scope
 			$location.path('/thanks');
 		});
 	}
-
 }]);
 // controller for the Applicant details
 app.controller('ApplicantCtrl', ['$scope', '$firebase', '$routeParams', function($scope, $firebase, $routeParams){
@@ -147,52 +119,41 @@ app.controller('ApplicantCtrl', ['$scope', '$firebase', '$routeParams', function
 	var ref = new Firebase("https://casting.firebaseio.com/applications/" + $routeParams.applicantID);
 	// start a firebase app with this url 
 	$scope.sync = $firebase(ref);
-	// setting applicant object to a variable then console logging the data received from that applicant
+	// setting applicant object to a variable
 	$scope.currentApplicant = $scope.sync.$asObject();
-	console.log('Current Applicant', $scope.currentApplicant);
-	console.log('Current project in applicant', $scope.currentProject);
-
 }]);
 
 
 // controller for current user status
 app.controller('StatusCtrl', ['$scope', '$location', '$firebase', '$firebaseAuth', '$rootScope', function($scope, $location, $firebase, $firebaseAuth, $rootScope){
+	// set current user email to variable of userEmail
 	$rootScope.$on('$firebaseAuth:login', function(e, authUser){
-		// console.log users information
-		console.log('email: ', authUser);
 		$scope.userEmail = authUser.email;
 	});
 
 	var userRef = new Firebase("https://casting.firebaseio.com/home");
-    $scope.authObj = $firebaseAuth(userRef);
 
+	// set ref to authobj for user authentication
+    $scope.authObj = $firebaseAuth(userRef);
     $scope.authObj.$onAuth(function(authData) {
 		if (authData) {
-			// console.log to view who is logged in
-		    // console.log("Logged in as:", authData.uid);
 		    var singleRef = new Firebase("https://casting.firebaseio.com/users/" + authData.uid);
 		    $scope.user = $firebase(singleRef);
 		    $scope.currentuser = $scope.user.$asObject();
-		    // console.log to view the current users info
-		    // console.log("This here ", $scope.currentuser);
 	  } else {
-	  	// console.log to view if user is logged out
-	    console.log("Logged out");
+	  	// logged out
 	  }
 	});
-
-	// console.log('Current project', $scope.currentProject);
 }]);
-// controller for home chat
+// controller for notes chat (chat in each actor's detail page)
 app.controller('NotesCtrl', ['$scope', '$location', '$firebase', '$firebaseAuth', '$rootScope', '$routeParams', function($scope, $location, $firebase, $firebaseAuth, $rootScope, $routeParams){
 	// setting 'ref' to my firebase url
 	var ref = new Firebase("https://casting.firebaseio.com/applications/" + $routeParams.applicantID + "/notes");
 	// start a firebase app with this url 
 	var sync = $firebase(ref);
-
-	var userRef = new Firebase("https://casting.firebaseio.com/applications/" + $routeParams.applicantID + "/notes");
-    $scope.authObj = $firebaseAuth(userRef);
-
+	
+	// set ref to authobj for user authentication
+	$scope.authObj = $firebaseAuth(ref);
     $scope.authObj.$onAuth(function(authData) {
 		if (authData) {
 		    var singleRef = new Firebase("https://casting.firebaseio.com/users/" + authData.uid);
@@ -202,35 +163,37 @@ app.controller('NotesCtrl', ['$scope', '$location', '$firebase', '$firebaseAuth'
 		    	$scope.currentuser = data;
 		    })
 		} else {
+			// send to login page if not logged in
 			$location.path('/login');
 		}
 	});
 
 	// addmessage function that adds message to array along with its author upon hitting return, then clears the textarea
 	$scope.notes = sync.$asArray();
-	console.log('notes ', $scope.notes);
 	$scope.addMessage = function(e) {
 		$scope.fullName = $scope.currentuser.fname + " " + $scope.currentuser.lname;
+		// "if enter button is pressed"
 		if(e.keyCode != 13) return;
 		$scope.notes.$add({
 			from: $scope.fullName,
 			text: $scope.newMessage,
 			id: $scope.currentuser.$id
 		}).then(function(){
+			// clears the textarea
 			$scope.newMessage = "";
 		});
 	}
 }]);
-// controller for chat chat
+// controller for main chat
 app.controller('ChatCtrl', ['$scope', '$location', '$firebase', '$firebaseAuth', '$rootScope', '$routeParams', function($scope, $location, $firebase, $firebaseAuth, $rootScope, $routeParams){
 	// setting 'ref' to my firebase url
 	var ref = new Firebase("https://casting.firebaseio.com/projects/" + $routeParams.projectID + "/chat");
 	// start a firebase app with this url 
 	var sync = $firebase(ref);
 
-	var userRef = new Firebase("https://casting.firebaseio.com/projects/" + $routeParams.projectID + "/chat");
-    $scope.authObj = $firebaseAuth(userRef);
-
+	// set ref to authobj for user authentication
+    $scope.authObj = $firebaseAuth(ref);
+    // upon authentication log in, if not authenticated, return to login
     $scope.authObj.$onAuth(function(authData) {
 		if (authData) {
 		    var singleRef = new Firebase("https://casting.firebaseio.com/users/" + authData.uid);
@@ -240,36 +203,36 @@ app.controller('ChatCtrl', ['$scope', '$location', '$firebase', '$firebaseAuth',
 		    	$scope.currentuser = data;
 		    })
 	  } else {
+	  	// send to login page if not logged in
 	  	$location.path('/login');
 	  }
 	});
 
-	// addmessage function that adds message to array along with its author upon hitting return, 
-	// then clears the textarea
+	// addmessage function that adds message to array along with its author upon hitting return
 	$scope.messages = sync.$asArray();
 	$scope.addMessage = function(e) {
 		$scope.fullName = $scope.currentuser.fname + " " + $scope.currentuser.lname;
-		
+		// "if enter button is pressed"
 		if(e.keyCode != 13) return;
 		$scope.messages.$add({
 			from: $scope.fullName,
 			text: $scope.newMessage,
 			id: $scope.currentuser.$id
 		}).then(function(){
+			// clears the textarea
 			$scope.newMessage = "";
 		});
 	}
 }]);
-// controller for chat chat
+// controller for adding projects
 app.controller('ProjectsCtrl', ['$scope', '$location', '$firebase', '$firebaseAuth', '$rootScope', function($scope, $location, $firebase, $firebaseAuth, $rootScope){
 	// setting 'ref' to my firebase url
 	var ref = new Firebase("https://casting.firebaseio.com/projects");
 	// start a firebase app with this url 
 	var sync = $firebase(ref);
 
-	var userRef = new Firebase("https://casting.firebaseio.com/projects");
-    $scope.authObj = $firebaseAuth(userRef);
-
+	// set ref to authobj for user authentication
+    $scope.authObj = $firebaseAuth(ref);
     $scope.authObj.$onAuth(function(authData) {
 		if (authData) {
 		    var singleRef = new Firebase("https://casting.firebaseio.com/users/" + authData.uid);
@@ -280,22 +243,23 @@ app.controller('ProjectsCtrl', ['$scope', '$location', '$firebase', '$firebaseAu
 		    })
 		    
 	  } else {
+	  	// send to login page if not logged in
 	  	$location.path('/login');
 	  }
 	});
 
+    // addProject function that adds projects to array
 	$scope.projects = sync.$asArray();
 	$scope.addProject = function() {
-		
+		// adds project creator along with project info
 		$scope.project.user_id = $scope.currentuser.$id;
-		
 		$scope.projects.$add(
 			$scope.project
 		).then(function(){
+			// clears the form
 			$scope.project = {};
 		});
 	}
-
 }]);
 // controller for the Project details
 app.controller('ProjectCtrl', ['$scope', '$firebase', '$routeParams', function($scope, $firebase, $routeParams){
@@ -304,10 +268,8 @@ app.controller('ProjectCtrl', ['$scope', '$firebase', '$routeParams', function($
 	// start a firebase app with this url 
 	$scope.sync = $firebase(ref);
 	$scope.currentProject = $scope.sync.$asObject();
-	// console.log('Current project', $scope.currentProject);
-
 }]);
-// controller for the Project details
+// controller for displaying projects in the actor audition application
 app.controller('SelectCtrl', ['$scope', '$firebase', '$routeParams', function($scope, $firebase, $routeParams){
 	// setting 'ref' to my firebase url
 	var ref = new Firebase("https://casting.firebaseio.com/projects/");
@@ -315,49 +277,14 @@ app.controller('SelectCtrl', ['$scope', '$firebase', '$routeParams', function($s
 	$scope.sync = $firebase(ref);
 	// setting applicant object to a variable then console logging the data received from that applicant
 	$scope.projects = $scope.sync.$asArray();
-	// console.log($scope.currentProject);
-
 }]);
-
-app.controller('CategoryCtrl', ['$scope', '$location', '$firebase', '$firebaseAuth', '$rootScope', '$routeParams', function($scope, $location, $firebase, $firebaseAuth, $rootScope, $routeParams){
-	// setting 'ref' to my firebase url
-	var ref = new Firebase("https://casting.firebaseio.com/applications/" + $routeParams.applicantID + "/category");
-	// start a firebase app with this url 
-	var sync = $firebase(ref);
-
-	var userRef = new Firebase("https://casting.firebaseio.com/applications/" + $routeParams.applicantID + "/category");
-    $scope.authObj = $firebaseAuth(userRef);
-
-    $scope.authObj.$onAuth(function(authData) {
-		if (authData) {
-		    var singleRef = new Firebase("https://casting.firebaseio.com/users/" + authData.uid);
-		    $scope.user = $firebase(singleRef);
-		    $scope.currentuser = $scope.user.$asObject();
-		    $scope.currentuser.$loaded().then(function(data){
-		    	$scope.currentuser = data;
-		    })
-		} else {
-			$location.path('/login');
-		}
-	});
-
-
-	$scope.category = sync.$asArray();
-
-	$scope.categorize = function(e) {
-		$scope.category.$save({
-			category: $scope.category
-		}).then(function(){
-			console.log("category: ", $scope.category);
-		});
-	}
-}]);
+// controller for adding projects to a directors list of projects / join project
 app.controller('MyProjectsCtrl', ['$scope', '$location', '$firebase', '$firebaseAuth', '$rootScope', '$routeParams', function($scope, $location, $firebase, $firebaseAuth, $rootScope, $routeParams){
-	
-
-	var userRef = new Firebase("https://casting.firebaseio.com/users/" + $routeParams.userID + "/myprojects");
-    $scope.authObj = $firebaseAuth(userRef);
-
+	// setting 'ref' to my firebase url
+	var ref = new Firebase("https://casting.firebaseio.com/users/" + $routeParams.userID + "/myprojects");
+    
+	// set ref to authobj for user authentication
+    $scope.authObj = $firebaseAuth(ref);
     $scope.authObj.$onAuth(function(authData) {
 		if (authData) {
 		    var singleRef = new Firebase("https://casting.firebaseio.com/users/" + authData.uid);
@@ -371,20 +298,25 @@ app.controller('MyProjectsCtrl', ['$scope', '$location', '$firebase', '$firebase
 				$rootScope.myprojects = sync.$asArray();
 		    })
 		} else {
+			// send to login page if not logged in
 			$location.path('/login');
 		}
 	});
 
+    // adds project keys to directors' array of projects
 	$scope.addMyProject = function(e) {
 		$scope.myprojects.$add({
 			id: $scope.projectsKey
 		}).then(function(){
+			// clears the textarea
 			$scope.projectsKey = "";
 		});
 	}
 
 }]);
 
+
+// filter function for filtering through projects (still in development)
 app.filter('projectfilter', function () {
   return function () {
     var projectkeys = [];

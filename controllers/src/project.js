@@ -5,6 +5,4 @@ app.controller('ProjectCtrl', ['$scope', '$firebase', '$routeParams', function($
 	// start a firebase app with this url 
 	$scope.sync = $firebase(ref);
 	$scope.currentProject = $scope.sync.$asObject();
-	// console.log('Current project', $scope.currentProject);
-
 }]);

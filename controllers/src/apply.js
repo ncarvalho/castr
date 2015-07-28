@@ -7,8 +7,6 @@ app.controller('ApplyCtrl', ['$scope', '$firebase', '$location', function($scope
 	// saving the array of applications to firebase
 	$scope.applications = sync.$asArray();
 	// apply function that accepts all the fields from the apply.html and saves into applications array
-	
-
 	$scope.apply = function(e) {
 		$scope.applications.$add(
 			$scope.application
@@ -19,5 +17,4 @@ app.controller('ApplyCtrl', ['$scope', '$firebase', '$location', function($scope
 			$location.path('/thanks');
 		});
 	}
-
 }]);

@@ -2,7 +2,8 @@
 app.controller('RegisterCtrl', ['$scope', '$location', '$firebase', '$firebaseAuth', '$rootScope', function($scope, $location, $firebase, $firebaseAuth, $rootScope){
 	// setting 'ref' to my firebase url
 	var ref = new Firebase("https://casting.firebaseio.com/users");
-    
+
+	// set ref to authobj for user authentication    
     $scope.authObj = $firebaseAuth(ref);
 	$scope.sync = $firebase(ref);
 	$scope.newUser = $scope.sync.$asObject();
@@ -49,5 +50,4 @@ app.controller('RegisterCtrl', ['$scope', '$location', '$firebase', '$firebaseAu
 			$location.path('/login');
 		});
 	}
-
 }]);

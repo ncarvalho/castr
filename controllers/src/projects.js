@@ -1,13 +1,12 @@
-// controller for chat chat
+// controller for adding projects
 app.controller('ProjectsCtrl', ['$scope', '$location', '$firebase', '$firebaseAuth', '$rootScope', function($scope, $location, $firebase, $firebaseAuth, $rootScope){
 	// setting 'ref' to my firebase url
 	var ref = new Firebase("https://casting.firebaseio.com/projects");
 	// start a firebase app with this url 
 	var sync = $firebase(ref);
 
-	var userRef = new Firebase("https://casting.firebaseio.com/projects");
-    $scope.authObj = $firebaseAuth(userRef);
-
+	// set ref to authobj for user authentication
+    $scope.authObj = $firebaseAuth(ref);
     $scope.authObj.$onAuth(function(authData) {
 		if (authData) {
 		    var singleRef = new Firebase("https://casting.firebaseio.com/users/" + authData.uid);
@@ -18,20 +17,21 @@ app.controller('ProjectsCtrl', ['$scope', '$location', '$firebase', '$firebaseAu
 		    })
 		    
 	  } else {
+	  	// send to login page if not logged in
 	  	$location.path('/login');
 	  }
 	});
 
+    // addProject function that adds projects to array
 	$scope.projects = sync.$asArray();
 	$scope.addProject = function() {
-		
+		// adds project creator along with project info
 		$scope.project.user_id = $scope.currentuser.$id;
-		
 		$scope.projects.$add(
 			$scope.project
 		).then(function(){
+			// clears the form
 			$scope.project = {};
 		});
 	}
-
 }]);
