@@ -135,7 +135,9 @@
 				        <!-- project title -->
 				        <div class="list-item radio">
 				        	<label>
-					        	<input id="selectProject" type="radio" name="selectProject" value="{{project.$id}}" ng-model="application.selectProject" ng-required="true"> <strong>{{ project.title }}</strong> <p>{{project.description}}</p>
+					        	<input id="selectProject" type="radio" name="selectProject" value="{{project.$id}}" ng-model="application.selectProject" ng-required="true"> 
+					        	    <b>{{ project.title }} <small>Date: {{project.date}} Time: {{project.time}}</small></b> 
+					        	    <p>{{project.description}}</p>
 					        	<p class="error" ng-show="applicationForm.selectProject.$invalid && applicationForm.selectProject.$touched">Please select a Project</p>
 					        </label>
 				        </div>
