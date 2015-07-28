@@ -1,4 +1,4 @@
-![alt tag](public/assets/logo-blk.png)
+![alt tag](public/assets/logo-blk.png =300x)
 - Organize auditions
 - Select your cast faster
 - Improve team communication
