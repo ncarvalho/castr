@@ -1,4 +1,4 @@
-# Castr
+![alt tag](public/assets/logo-blk.png)
 - Organize auditions
 - Select your cast faster
 - Improve team communication
