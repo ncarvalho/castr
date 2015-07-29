@@ -29,9 +29,18 @@ app.controller('ProjectsCtrl', ['$scope', '$location', '$firebase', '$firebaseAu
 		$scope.project.user_id = $scope.currentuser.$id;
 		$scope.projects.$add(
 			$scope.project
-		).then(function(){
+		).then(function(ref){
 			// clears the form
 			$scope.project = {};
+
+			var myProjectsRef = new Firebase("https://casting.firebaseio.com/users/" + $scope.currentuser.$id + "/myprojects");
+			var sync = $firebase(myProjectsRef);
+			var myprojects = sync.$asArray();
+			myprojects.$add({
+				id: ref.key()
+			});
+
+			console.log("id", ref.key());
 		});
 	}
 }]);

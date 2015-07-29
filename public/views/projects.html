@@ -49,7 +49,7 @@
 
 	<div class="col-xs-12 project-titles" ng-controller="ProjectCtrl">
 		<ul id="titles" class="inline-list">
-	      <li ng-repeat="project in projects | filter:projectfilter">
+	      <li ng-repeat="project in projects | projectfilter:myprojects">
 	        <!-- project title -->
 	        <div class="list-item">
 	        	<a href="#/projects/{{project.$id}}">{{ project.title }}</a>

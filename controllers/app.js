@@ -252,9 +252,18 @@ app.controller('ProjectsCtrl', ['$scope', '$location', '$firebase', '$firebaseAu
 		$scope.project.user_id = $scope.currentuser.$id;
 		$scope.projects.$add(
 			$scope.project
-		).then(function(){
+		).then(function(ref){
 			// clears the form
 			$scope.project = {};
+
+			var myProjectsRef = new Firebase("https://casting.firebaseio.com/users/" + $scope.currentuser.$id + "/myprojects");
+			var sync = $firebase(myProjectsRef);
+			var myprojects = sync.$asArray();
+			myprojects.$add({
+				id: ref.key()
+			});
+
+			console.log("id", ref.key());
 		});
 	}
 }]);
@@ -315,16 +324,21 @@ app.controller('MyProjectsCtrl', ['$scope', '$location', '$firebase', '$firebase
 
 // filter function for filtering through projects (still in development)
 app.filter('projectfilter', function () {
-  return function () {
-    var projectkeys = [];
-
-    console.log("myprojects", $rootScope.myprojects);
-
-    angular.forEach($rootScope.myprojects, function(value, key) {
-	  this.push(value);
-	  console.log("value", value);
-	}, projectkeys);
-
-    return projectkeys;
+  return function (allProjects, myprojects) {
+    var userProjects = [];
+    if(allProjects && myprojects)
+    {
+    	angular.forEach(myprojects, function(projectKey) {
+    		angular.forEach(allProjects, function(project)
+    		{
+    			if(projectKey.id === project.$id) 
+				 {
+				 	userProjects.push(project)
+				 }
+    		})
+			 
+		});
+    }
+    return userProjects;
   };
 });
